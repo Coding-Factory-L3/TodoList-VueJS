@@ -12,8 +12,6 @@ const { name, description, index, removeTodo } = defineProps<{
 const router = useRouter()
 
 const viewDetail = () => {
-  // Utilisez router.push pour naviguer vers la page de détail de la liste
-  // avec l'ID de la liste en tant que paramètre de requête
   router.push({ name: 'TodoDetailPage', query: { id: index } })
 }
 </script>

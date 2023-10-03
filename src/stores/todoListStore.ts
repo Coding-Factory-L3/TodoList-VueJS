@@ -49,29 +49,26 @@ export const useTodoListStore = defineStore('todoList', {
     incrementTodoId() {
       this.incrementTodoIdNb++
     },
-    addItemToList(todoId: number, name: string) {
+    addItemToList(todoId: number, newItem: Item) {
       const todo = this.todoList.find((t) => t.id === todoId)
       if (todo) {
-        const newItem: Item = {
-          id: todo.items.length + 1,
-          name,
-          completed: false
-        }
         todo.items.push(newItem)
+        // Mettez à jour le stockage local pour persister les changements
         localStorage.setItem('todoList', JSON.stringify(this.todoList))
       }
     },
 
     // Supprimer un item d'une liste de tâches
-    removeItemFromList(todoId: number, itemId: number) {
+    removeItemFromList(todoId: number, itemIndex: number) {
+      // Assurez-vous que todoId est valide et que itemIndex est un index valide
       const todo = this.todoList.find((t) => t.id === todoId)
-      if (todo) {
-        const itemIndex = todo.items.findIndex((item) => item.id === itemId)
-        if (itemIndex !== -1) {
-          todo.items.splice(itemIndex, 1)
-          localStorage.setItem('todoList', JSON.stringify(this.todoList))
-        }
+
+      if (todo && itemIndex >= 0 && itemIndex < todo.items.length) {
+        // Supprimez l'élément de la liste
+        todo.items.splice(itemIndex, 1)
+        // Mettez à jour le stockage local si nécessaire
+        localStorage.setItem('todoList', JSON.stringify(this.todoList))
       }
-  }
+    }
 }
 });
