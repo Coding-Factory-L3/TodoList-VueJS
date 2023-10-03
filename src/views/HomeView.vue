@@ -70,5 +70,8 @@ VButton {
     color 0.3s ease;
 }
 main {
+  max-width: 1280px;
+  margin: 0 0;
+  padding: 2rem;
 }
 </style>

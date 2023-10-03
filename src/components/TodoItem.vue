@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { defineProps } from 'vue'
+import IconTrashCan from '../components/icons/IConTrashCan.vue'
 
 // Define props for the component
 const { name, description, index, removeTodo } = defineProps<{
@@ -11,19 +12,16 @@ const { name, description, index, removeTodo } = defineProps<{
 </script>
 
 <template>
-  <div class="bg-white p-4 rounded shadow-md mb-2">
-    <h3 class="text-lg font-bold">{{ name }}</h3>
+  <div class="bg-white p-4 rounded shadow-md mb-2 w-72">
+    <div class="flex items-center justify-between mb-2">
+      <h3 class="text-lg font-bold">{{ name }}</h3>
+      <button
+        class="bg-red-500 text-white py-1 px-2 rounded hover:bg-red-600 transition-colors duration-300"
+        @click="() => removeTodo(index)"
+      >
+        <IconTrashCan />
+      </button>
+    </div>
     <p>{{ description }}</p>
-    <button
-      class="bg-red-500 text-white py-1 px-2 rounded hover:bg-red-600 transition-colors duration-300"
-      @click="() => removeTodo(index)"
-    >
-      Remove
-    </button>
-    <button
-      class="bg-blue-500 text-white py-1 px-2 rounded hover:bg-blue-600 transition-colors duration-300"
-    >
-      Edit
-    </button>
   </div>
 </template>
