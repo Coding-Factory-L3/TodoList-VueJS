@@ -2,7 +2,22 @@
 import { ref } from 'vue'
 import { useTodoListStore } from '../stores/todoListStore'
 import TodoItemVue from '@/components/TodoItem.vue'
+import IconAdd from '@/components/icons/IconAdd.vue'
+import { ModalsContainer, useModal } from 'vue-final-modal'
+import ModalAddTodo from '@/components/modals/ModalAddTodo.vue'
 
+const { open, close } = useModal({
+  component: ModalAddTodo,
+  attrs: {
+    title: 'Create a todo task!',
+    onConfirm() {
+      close()
+    }
+  },
+  slots: {
+    default: '<p>The content of the modal</p>'
+  }
+})
 const store = useTodoListStore()
 
 const todos = ref(store.todoList)
@@ -15,13 +30,21 @@ const removeTodo = (index: number) => {
 </script>
 
 <template>
-  <h1 class="text-2xl font-bold mb-4">Home</h1>
-  <main>
+  <VButton @click="open"> Add Todo </VButton>
+
+  <ModalsContainer />
+
+  <main class="flex flex-col items-center justify-center py-2">
+    <h1 class="text-2xl font-bold mb-4">Todos List</h1>
     <div v-if="todos.length === 0">
       <p class="text-gray-700">No todos yet.</p>
     </div>
     <div v-else>
-      <div v-for="(todo, index) in todos" :key="index">
+      <div
+        class="flex flex-col items-center justify-center gap-4"
+        v-for="(todo, index) in todos"
+        :key="index"
+      >
         <TodoItemVue
           :name="todo.name"
           :description="todo.description"
@@ -32,3 +55,20 @@ const removeTodo = (index: number) => {
     </div>
   </main>
 </template>
+
+<style scoped>
+VButton {
+  background-color: var(--vt-c-indigo);
+  color: var(--vt-c-text-dark-1);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  margin: 20px 0;
+  cursor: pointer;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+main {
+}
+</style>
