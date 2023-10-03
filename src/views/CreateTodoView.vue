@@ -8,13 +8,14 @@ const store = useTodoListStore()
 const todo = reactive<Todo>({
   id: 0,
   name: '',
-  description: ''
+  description: '',
+  items: []
 })
 
-const { name, description } = toRefs(todo)
+const { name, description, items } = toRefs(todo)
 
 const handleAddTodo = () => {
-  store.addTodo(store.todoListCount, name.value, description.value)
+  store.addTodo(store.todoListCount, name.value, description.value, items.value)
   name.value = ''
   description.value = ''
 }

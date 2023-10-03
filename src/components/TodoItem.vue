@@ -1,13 +1,21 @@
 <script setup lang="ts">
 import { defineProps } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 
-// Define props for the component
 const { name, description, index, removeTodo } = defineProps<{
   name: string
   description: string
   index: number
   removeTodo: (index: number) => void
 }>()
+
+const router = useRouter()
+
+const viewDetail = () => {
+  // Utilisez router.push pour naviguer vers la page de détail de la liste
+  // avec l'ID de la liste en tant que paramètre de requête
+  router.push({ name: 'TodoDetailPage', query: { id: index } })
+}
 </script>
 
 <template>
@@ -24,6 +32,12 @@ const { name, description, index, removeTodo } = defineProps<{
       class="bg-blue-500 text-white py-1 px-2 rounded hover:bg-blue-600 transition-colors duration-300"
     >
       Edit
+    </button>
+    <button
+      class="bg-blue-500 text-white py-1 px-2 rounded hover:bg-blue-600 transition-colors duration-300"
+      @click="viewDetail"
+    >
+      View Detail
     </button>
   </div>
 </template>
