@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import { watchEffect } from 'vue'
 
 interface TodoListState {
   todoList: Todo[]
@@ -25,7 +26,7 @@ export const useTodoListStore = defineStore('todoList', {
       this.todoList.push({ id, name, description })
       // Update local storage to persist the changes
       localStorage.setItem('todoList', JSON.stringify(this.todoList))
-
+      this.incrementTodoId()
       this.todoListCount++
     },
     removeTodo(index: number) {
@@ -39,8 +40,12 @@ export const useTodoListStore = defineStore('todoList', {
       // Update local storage to persist the changes
       localStorage.setItem('todoList', JSON.stringify(this.todoList))
     },
+    getTodoById(id: number) {
+      return this.todoList.find((todo) => todo.id === id)
+    },
     incrementTodoId() {
-      this.incrementTodoIdNb++
+      // this.incrementTodoIdNb++
+      this.incrementTodoIdNb = Math.max(...this.todoList.map((todo) => todo.id)) + 1
     }
   }
 })

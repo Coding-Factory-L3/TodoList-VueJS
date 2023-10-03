@@ -3,6 +3,7 @@ import { VueFinalModal } from 'vue-final-modal'
 import type { Todo } from '@/stores/todoListStore'
 import { reactive, toRefs } from 'vue'
 import { useTodoListStore } from '../../stores/todoListStore'
+import VButtonItem from '../VButtonItem.vue'
 const store = useTodoListStore()
 
 defineProps<{
@@ -25,7 +26,7 @@ const handleAddTodo = () => {
     return
   }
 
-  store.addTodo(store.todoListCount, name.value, description.value)
+  store.addTodo(store.incrementTodoIdNb, name.value, description.value)
   name.value = ''
   description.value = ''
   emit('confirm')
@@ -60,12 +61,7 @@ const handleAddTodo = () => {
           v-model="description"
         ></textarea>
       </div>
-      <button
-        type="submit"
-        class="bg-gray-700 text-white p-4 rounded cursor-pointer hover:bg-black transition-colors duration-300"
-      >
-        Confirm
-      </button>
+      <VButtonItem buttonText="Confirm" :action="handleAddTodo" />
     </form>
   </VueFinalModal>
 </template>

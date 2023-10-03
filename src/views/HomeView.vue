@@ -2,7 +2,6 @@
 import { ref } from 'vue'
 import { useTodoListStore } from '../stores/todoListStore'
 import TodoItemVue from '@/components/TodoItem.vue'
-import IconAdd from '@/components/icons/IconAdd.vue'
 import { ModalsContainer, useModal } from 'vue-final-modal'
 import ModalAddTodo from '@/components/modals/ModalAddTodo.vue'
 
@@ -49,6 +48,7 @@ const removeTodo = (index: number) => {
           :name="todo.name"
           :description="todo.description"
           :index="index"
+          :id="todo.id"
           :removeTodo="removeTodo"
         />
       </div>
